@@ -44,7 +44,7 @@ export default async function WikiPage({
               </Link>
             ) : null}
           </header>
-          <MarkdownView content={page.content} />
+          <MarkdownView content={page.content} notionPath={page.notion_path} />
         </article>
       </main>
     </div>

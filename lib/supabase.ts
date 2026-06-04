@@ -8,6 +8,7 @@ export type PlaybookPage = {
   status: "draft" | "published";
   audience: "internal" | "client" | "all";
   sort_order: number;
+  notion_path?: string | null;
   updated_at: string;
 };
 
