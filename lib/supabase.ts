@@ -40,6 +40,20 @@ const seedPages: PlaybookPage[] = [
   }
 ];
 
+function normalizeSupabaseUrl(value: string) {
+  const trimmed = value.trim().replace(/\/$/, "");
+
+  if (trimmed.startsWith("https://") || trimmed.startsWith("http://")) {
+    return trimmed;
+  }
+
+  if (!trimmed.includes(".") && /^[a-z0-9]+$/.test(trimmed)) {
+    return `https://${trimmed}.supabase.co`;
+  }
+
+  return trimmed;
+}
+
 function requireSupabaseEnv() {
   const url = process.env.SUPABASE_URL;
   const key = process.env.SUPABASE_SERVICE_ROLE_KEY;
@@ -49,7 +63,7 @@ function requireSupabaseEnv() {
   }
 
   return {
-    url: url.replace(/\/$/, ""),
+    url: normalizeSupabaseUrl(url),
     key
   };
 }

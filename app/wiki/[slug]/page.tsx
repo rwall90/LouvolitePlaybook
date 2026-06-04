@@ -6,6 +6,8 @@ import { MarkdownView } from "@/lib/markdown";
 import { requireSession } from "@/lib/auth";
 import { getPage, listPages } from "@/lib/supabase";
 
+export const dynamic = "force-dynamic";
+
 export default async function WikiPage({
   params
 }: {
