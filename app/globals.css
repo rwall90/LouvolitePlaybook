@@ -505,6 +505,130 @@ textarea {
   margin-bottom: 0;
 }
 
+.notion-body {
+  display: grid;
+  gap: 0.72rem;
+}
+
+.notion-children {
+  display: grid;
+  gap: 0.45rem;
+  margin-top: 0.5rem;
+  padding-left: 1.1rem;
+}
+
+.notion-spacer {
+  height: 0.6rem;
+}
+
+.notion-list-item {
+  display: grid;
+  grid-template-columns: 22px minmax(0, 1fr);
+  gap: 6px;
+  align-items: start;
+}
+
+.notion-list-item > span {
+  color: var(--green);
+  font-weight: 850;
+}
+
+.notion-list-item.numbered > span {
+  font-size: 0.78rem;
+}
+
+.notion-todo {
+  display: flex;
+  align-items: flex-start;
+  gap: 9px;
+  color: #25312e;
+  font-weight: 500;
+}
+
+.notion-todo input {
+  flex: 0 0 auto;
+  margin-top: 4px;
+}
+
+.notion-toggle {
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: white;
+}
+
+.notion-toggle summary {
+  padding: 12px 14px;
+  color: var(--green-dark);
+  font-weight: 820;
+  cursor: pointer;
+}
+
+.notion-toggle[open] summary {
+  border-bottom: 1px solid var(--line);
+  background: var(--soft);
+}
+
+.notion-toggle > .notion-children {
+  padding: 14px 18px 16px 28px;
+}
+
+.notion-child-page {
+  display: block;
+  padding: 12px 14px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  color: var(--green-dark);
+  background: var(--soft);
+  font-weight: 820;
+  text-decoration: none;
+}
+
+.notion-color-gray_background {
+  background: #f4f5f3;
+}
+
+.notion-color-brown_background {
+  background: #f6f0eb;
+}
+
+.notion-color-orange_background {
+  background: #fff1e6;
+}
+
+.notion-color-yellow_background {
+  background: #fff7d6;
+}
+
+.notion-color-green_background {
+  background: #e9f6ef;
+}
+
+.notion-color-blue_background {
+  background: #eaf2fb;
+}
+
+.notion-color-purple_background {
+  background: #f2eefb;
+}
+
+.notion-color-pink_background {
+  background: #fbedf4;
+}
+
+.notion-color-red_background {
+  background: #fdeceb;
+}
+
+.article-body figure {
+  margin: 18px 0 24px;
+}
+
+.article-body figcaption {
+  margin-top: 8px;
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
 .article-body pre {
   overflow: auto;
   padding: 14px;

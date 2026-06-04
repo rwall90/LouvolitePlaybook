@@ -1,9 +1,11 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { NotionBlocks } from "@/components/NotionBlocks";
 import { Topbar } from "@/components/Topbar";
 import { WikiSidebar } from "@/components/WikiSidebar";
 import { MarkdownView } from "@/lib/markdown";
 import { requireSession } from "@/lib/auth";
+import { listBlocks } from "@/lib/notion";
 import { getPage, listPages } from "@/lib/supabase";
 
 export const dynamic = "force-dynamic";
@@ -26,6 +28,8 @@ export default async function WikiPage({
     notFound();
   }
 
+  const blocks = await listBlocks(page.id);
+
   return (
     <div className="shell">
       <Topbar />
@@ -44,7 +48,11 @@ export default async function WikiPage({
               </Link>
             ) : null}
           </header>
-          <MarkdownView content={page.content} notionPath={page.notion_path} />
+          {blocks.length > 0 ? (
+            <NotionBlocks blocks={blocks} />
+          ) : (
+            <MarkdownView content={page.content} notionPath={page.notion_path} />
+          )}
         </article>
       </main>
     </div>

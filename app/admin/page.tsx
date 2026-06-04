@@ -1,13 +1,13 @@
 import Link from "next/link";
 import { Topbar } from "@/components/Topbar";
-import { savePage } from "@/app/actions";
+import { importFromNotion, savePage } from "@/app/actions";
 import { requireAdmin } from "@/lib/auth";
 import { listPages } from "@/lib/supabase";
 
 export default async function AdminPage({
   searchParams
 }: {
-  searchParams: Promise<{ selected?: string; new?: string }>;
+  searchParams: Promise<{ selected?: string; new?: string; imported?: string }>;
 }) {
   await requireAdmin();
   const params = await searchParams;
@@ -31,7 +31,16 @@ export default async function AdminPage({
           <Link className="button secondary" href="/admin?new=1">
             New page
           </Link>
+          <form action={importFromNotion}>
+            <button className="button" type="submit">
+              Import from Notion
+            </button>
+          </form>
         </section>
+
+        {params.imported ? (
+          <p className="notice">Imported {params.imported} Notion pages. Open the wiki to review structured blocks.</p>
+        ) : null}
 
         <section className="admin-layout">
           <aside className="panel">

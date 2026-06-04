@@ -2,6 +2,7 @@ create extension if not exists pgcrypto;
 
 create table if not exists public.playbook_pages (
   id uuid primary key default gen_random_uuid(),
+  notion_page_id text unique,
   title text not null,
   slug text not null unique,
   section text not null default 'Playbook',
@@ -11,6 +12,20 @@ create table if not exists public.playbook_pages (
   audience text not null default 'all' check (audience in ('internal', 'client', 'all')),
   sort_order integer not null default 100,
   notion_path text,
+  imported_at timestamptz,
+  created_at timestamptz not null default now(),
+  updated_at timestamptz not null default now()
+);
+
+create table if not exists public.playbook_blocks (
+  id uuid primary key default gen_random_uuid(),
+  page_id uuid not null references public.playbook_pages(id) on delete cascade,
+  notion_block_id text not null unique,
+  parent_block_id text,
+  type text not null,
+  content jsonb not null default '{}'::jsonb,
+  has_children boolean not null default false,
+  sort_order integer not null default 100,
   created_at timestamptz not null default now(),
   updated_at timestamptz not null default now()
 );
@@ -40,7 +55,13 @@ create trigger playbook_pages_set_updated_at
 before update on public.playbook_pages
 for each row execute function public.set_updated_at();
 
+drop trigger if exists playbook_blocks_set_updated_at on public.playbook_blocks;
+create trigger playbook_blocks_set_updated_at
+before update on public.playbook_blocks
+for each row execute function public.set_updated_at();
+
 alter table public.playbook_pages enable row level security;
+alter table public.playbook_blocks enable row level security;
 alter table public.leads enable row level security;
 
 insert into public.playbook_pages (

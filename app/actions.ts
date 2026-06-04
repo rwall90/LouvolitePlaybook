@@ -3,6 +3,7 @@
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import { createSessionValue, requireAdmin, sessionCookieName } from "@/lib/auth";
+import { importNotionPlaybook } from "@/lib/notion";
 import { supabaseFetch } from "@/lib/supabase";
 
 function slugify(value: string) {
@@ -96,4 +97,10 @@ export async function savePage(formData: FormData) {
   }
 
   redirect(`/admin?selected=${slug}`);
+}
+
+export async function importFromNotion() {
+  await requireAdmin();
+  const imported = await importNotionPlaybook();
+  redirect(`/admin?imported=${imported.length}`);
 }
